@@ -10,19 +10,55 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkNibbleArray;
 import net.minecraft.world.chunk.ChunkProvider;
 import net.minecraft.world.chunk.light.LightingProvider;
+
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(ServerLightingProvider.class)
 public abstract class ServerLightingProvider_scarpetMixin extends LightingProvider implements ServerLightingProviderInterface
 {
+    @Shadow @Final volatile int taskBatchSize;
+
     @Shadow public abstract void checkBlock(BlockPos pos);
+
+    private boolean blockLight;
+    private boolean skyLight;
 
     public ServerLightingProvider_scarpetMixin(ChunkProvider chunkProvider, boolean hasBlockLight, boolean hasSkyLight)
     {
         super(chunkProvider, hasBlockLight, hasSkyLight);
+
+        this.blockLight = hasBlockLight;
+        this.skyLight = hasSkyLight;
     }
 
+    @Override
+    public boolean hasBlockLight() {
+        return blockLight;
+    }
+
+    @Override
+    public boolean hasSkyLight() {
+        return skyLight;
+    }
+
+    @Override
+    public void setBlockLight(ChunkProvider provider, boolean value) {
+        
+    }
+
+    @Override
+    public void setSkyLight(ChunkProvider provider, boolean value) {
+        
+    }
+
+    @Override
+    public int getTaskBatchSize()
+    {
+        return taskBatchSize;
+    }
+    
     @Override
     public void resetLight(Chunk chunk, ChunkPos pos)
     {

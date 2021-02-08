@@ -350,6 +350,9 @@ public class CarpetSettings
     @Rule(desc = "Enables /tick command to control game clocks", category = COMMAND)
     public static String commandTick = "ops";
 
+    @Rule(desc = "Enables /light command for light engine debug", category = COMMAND)
+    public static String commandLight = "ops";
+
     @Rule(
             desc = "Enables /profile command to monitor game performance",
             extra = "subset of /tick command capabilities",
